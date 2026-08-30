@@ -1,0 +1,1940 @@
+```html
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Adjie — A Little Book</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    min-height:100vh;
+    background:radial-gradient(circle at top,#ead5b7,#b99770 70%);
+    font-family:Georgia,"Times New Roman",serif;
+    color:#4b3025;
+    overflow-x:hidden;
+}
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    opacity:.16;
+    background:repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 3px,
+        rgba(80,45,25,.15) 4px
+    );
+}
+
+/* ================= COVER ================= */
+
+.cover{
+    position:fixed;
+    inset:0;
+    z-index:20;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#3d241b,#6b4934,#321d17);
+    transition:.8s;
+}
+
+.cover.open{
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+}
+
+.cover-box{
+    width:min(420px,88%);
+    padding:55px 35px;
+    text-align:center;
+    border:2px solid #d8b88c;
+    border-radius:8px;
+    background:linear-gradient(
+        rgba(90,55,38,.9),
+        rgba(48,28,22,.96)
+    );
+    box-shadow:0 30px 80px rgba(0,0,0,.5);
+    color:#f5dfbd;
+}
+
+.cover-coffee{
+    font-size:65px;
+    margin-bottom:15px;
+    animation:coffeeFloat 3s ease-in-out infinite;
+}
+
+@keyframes coffeeFloat{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-10px);}
+}
+
+.cover h1{
+    font-size:45px;
+    margin-bottom:10px;
+}
+
+.cover p{
+    line-height:1.8;
+}
+
+.open-btn{
+    margin-top:20px;
+    padding:11px 22px;
+    border:1px solid #8c6747;
+    border-radius:30px;
+    background:#6d4934;
+    color:#fff0d5;
+    font-family:inherit;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.open-btn:hover{
+    transform:translateY(-3px);
+    background:#825a40;
+}
+
+/* ================= BOOK ================= */
+
+.book-wrapper{
+    width:min(1050px,94%);
+    margin:35px auto 0;
+}
+
+.book{
+    position:relative;
+    width:100%;
+    min-height:650px;
+    display:flex;
+    justify-content:center;
+    align-items:stretch;
+}
+
+.page{
+    display:none;
+    width:100%;
+    min-height:650px;
+    position:relative;
+    overflow:hidden;
+    padding:42px 55px;
+
+    border:1px solid #9b7654;
+    border-radius:4px;
+
+    background-color:#f3e4c7;
+    background-image:repeating-linear-gradient(
+        to bottom,
+        transparent 0,
+        transparent 31px,
+        rgba(112,78,50,.22) 32px
+    );
+
+    box-shadow:
+        inset 0 0 40px rgba(88,51,27,.12),
+        0 15px 40px rgba(49,29,19,.3);
+
+    animation:pageIn .5s ease;
+}
+
+.page.active{
+    display:block;
+}
+
+@keyframes pageIn{
+    from{
+        opacity:0;
+        transform:translateX(12px);
+    }
+    to{
+        opacity:1;
+        transform:translateX(0);
+    }
+}
+
+.page::after{
+    content:"";
+    position:absolute;
+    left:35px;
+    top:0;
+    bottom:0;
+    width:1px;
+    background:rgba(150,80,60,.25);
+}
+
+.inner{
+    position:relative;
+    z-index:2;
+    max-width:850px;
+    margin:auto;
+    text-align:center;
+}
+
+.inner h2{
+    font-size:34px;
+    margin:10px 0 22px;
+}
+
+.inner p{
+    line-height:1.85;
+    margin:12px 0;
+}
+
+.page-coffee,
+.page-brain{
+    position:absolute;
+    font-size:48px;
+    opacity:.25;
+    z-index:1;
+}
+
+.page-coffee{
+    top:20px;
+    right:30px;
+}
+
+.page-brain{
+    bottom:25px;
+    left:25px;
+}
+
+.page-decoration{
+    position:absolute;
+    font-size:45px;
+    opacity:.18;
+}
+
+.dec1{
+    left:12%;
+    top:25%;
+}
+
+.dec2{
+    right:8%;
+    bottom:20%;
+}
+
+.heart{
+    font-size:30px;
+    margin-bottom:10px;
+}
+
+/* ================= QUOTE ================= */
+
+.quote{
+    margin:25px auto;
+    padding:18px;
+    max-width:650px;
+    border-left:3px solid #806044;
+    background:rgba(130,92,60,.08);
+    line-height:1.8;
+}
+
+/* ================= MUSIC ================= */
+
+.music{
+    margin:20px auto;
+    max-width:650px;
+}
+
+.cd{
+    width:130px;
+    height:130px;
+    margin:20px auto;
+    border-radius:50%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:40px;
+
+    background:repeating-radial-gradient(
+        circle,
+        #35241e 0,
+        #35241e 2px,
+        #80644e 3px,
+        #35241e 5px
+    );
+
+    border:8px solid #271914;
+    box-shadow:0 10px 25px rgba(0,0,0,.35);
+}
+
+.cd.playing{
+    animation:spin 2s linear infinite;
+}
+
+@keyframes spin{
+    to{transform:rotate(360deg);}
+}
+
+.youtube-box{
+    width:100%;
+    aspect-ratio:16/9;
+    overflow:hidden;
+    border-radius:10px;
+    background:#2c1b16;
+    border:1px solid #76553e;
+}
+
+.youtube-box iframe{
+    width:100%;
+    height:100%;
+    border:0;
+}
+
+/* ================= HEALTH ================= */
+
+.health-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+    margin-top:25px;
+}
+
+.health-card{
+    padding:18px;
+    border:1px solid #b79772;
+    border-radius:10px;
+    background:rgba(255,248,229,.55);
+    text-align:center;
+}
+
+.health-card span{
+    display:block;
+    font-size:32px;
+    margin-bottom:8px;
+}
+
+.health-card strong{
+    display:block;
+    margin-bottom:8px;
+}
+
+.health-card small{
+    line-height:1.6;
+}
+
+/* ================= HEALTH LIST ================= */
+
+.health-page{
+    max-height:650px;
+    overflow-y:auto;
+    padding-right:20px;
+}
+
+.health-list{
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+    text-align:left;
+}
+
+.health-item{
+    display:flex;
+    gap:15px;
+    padding:17px;
+    border:1px solid #b99773;
+    border-radius:10px;
+    background:rgba(255,249,233,.5);
+}
+
+.health-icon{
+    font-size:30px;
+    min-width:45px;
+    text-align:center;
+}
+
+.health-item h3{
+    margin-bottom:6px;
+}
+
+.health-item p{
+    margin:4px 0;
+    line-height:1.7;
+}
+
+.health-note{
+    margin-top:20px;
+    padding:14px;
+    font-size:12px;
+    font-style:italic;
+    border:1px dashed #96704d;
+}
+
+/* ================= LITTLE THINGS ================= */
+
+.message-page{
+    height:565px;
+    max-width:780px;
+    margin:auto;
+    position:relative;
+}
+
+.message-scroll{
+    height:430px;
+    overflow-y:auto;
+    text-align:left;
+    padding:25px;
+    border:1px solid #aa8662;
+    border-radius:12px;
+    background:rgba(255,247,225,.65);
+    scroll-behavior:smooth;
+}
+
+.message-scroll::-webkit-scrollbar{
+    width:10px;
+}
+
+.message-scroll::-webkit-scrollbar-thumb{
+    background:#806044;
+    border-radius:10px;
+}
+
+.message-scroll p{
+    line-height:1.9;
+    margin-bottom:25px;
+}
+
+.scroll-hint{
+    position:absolute;
+    bottom:-4px;
+    left:50%;
+    transform:translateX(-50%);
+    padding:8px 15px;
+    border-radius:20px;
+    background:#6e4b35;
+    color:#fff1d7;
+    font-size:12px;
+    animation:hint 1.5s infinite;
+}
+
+@keyframes hint{
+    0%,100%{
+        transform:translate(-50%,0);
+    }
+    50%{
+        transform:translate(-50%,5px);
+    }
+}
+
+/* ================= COFFEE ================= */
+
+.coffee-page{
+    min-height:540px;
+}
+
+.coffee-cup{
+    font-size:100px;
+    margin:15px auto;
+    animation:coffeeFloat 3s ease-in-out infinite;
+}
+
+.coffee-decoration{
+    position:absolute;
+    font-size:70px;
+    opacity:.25;
+}
+
+.c1{left:20px;top:40px;}
+.c2{right:25px;top:100px;}
+.c3{left:50px;bottom:60px;}
+.c4{right:60px;bottom:50px;}
+
+.love-frame{
+    width:230px;
+    height:180px;
+    margin:20px auto;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    border:2px solid #8c6747;
+    border-radius:50%;
+    background:rgba(255,240,215,.6);
+    box-shadow:0 10px 30px rgba(75,45,28,.15);
+}
+
+.love-text{
+    font-size:18px;
+    line-height:1.7;
+    text-align:center;
+    padding:15px;
+}
+
+/* ================= CITY ================= */
+
+.city{
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+    margin:40px 0;
+    font-size:20px;
+}
+
+.city-heart{
+    font-size:40px;
+    animation:heartbeat 1.5s infinite;
+}
+
+@keyframes heartbeat{
+    0%,100%{transform:scale(1);}
+    50%{transform:scale(1.2);}
+}
+
+/* ================= FINAL ================= */
+
+.final-page{
+    height:565px;
+    overflow-y:auto;
+    padding-right:15px;
+}
+
+.final-page::-webkit-scrollbar{
+    width:10px;
+}
+
+.final-page::-webkit-scrollbar-thumb{
+    background:#806044;
+    border-radius:10px;
+}
+
+.final-heart{
+    font-size:65px;
+    animation:heartbeat 1.5s infinite;
+}
+
+.final-message{
+    max-width:650px;
+    margin:25px auto;
+    padding:25px;
+    border:1px solid #a98562;
+    border-radius:12px;
+    background:rgba(255,246,225,.65);
+    line-height:1.9;
+}
+
+.closing{
+    margin-top:35px;
+    padding:25px 15px;
+    border-top:1px solid rgba(100,65,40,.3);
+}
+
+.i-love-you{
+    font-size:32px;
+    margin-top:25px;
+    font-weight:bold;
+    font-style:italic;
+}
+
+/* ================= NAVIGATION ================= */
+
+.navigation{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:30px;
+    margin-top:20px;
+    padding-bottom:30px;
+}
+
+.navigation button{
+    padding:12px 25px;
+    border:1px solid #75553d;
+    border-radius:25px;
+    background:#654532;
+    color:#fff0d5;
+    font-family:inherit;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.navigation button:hover{
+    transform:translateY(-2px);
+    background:#815b41;
+}
+
+.navigation button:disabled{
+    opacity:.35;
+    cursor:not-allowed;
+    transform:none;
+}
+
+.page-number{
+    min-width:75px;
+    text-align:center;
+    font-weight:bold;
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width:700px){
+
+    .book-wrapper{
+        width:94%;
+    }
+
+    .page{
+        padding:35px 28px;
+        min-height:680px;
+    }
+
+    .page::after{
+        left:20px;
+    }
+
+    .inner h2{
+        font-size:27px;
+    }
+
+    .health-grid{
+        grid-template-columns:1fr;
+    }
+
+    .health-page{
+        max-height:580px;
+    }
+
+    .message-page{
+        height:570px;
+    }
+
+    .message-scroll{
+        height:440px;
+    }
+
+    .city{
+        flex-direction:column;
+        gap:20px;
+    }
+
+    .navigation{
+        gap:12px;
+    }
+
+    .navigation button{
+        padding:10px 18px;
+    }
+
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================= COVER ================= -->
+
+<div class="cover" id="cover">
+
+    <div class="cover-box">
+
+        <div class="cover-coffee">☕</div>
+
+        <h1>Hai Adjie</h1>
+
+        <p>Welcome Home</p>
+
+        <br>
+
+        <p>
+            Sebuah buku kecil tentang
+            akhir akhir trouble nya hubungan kita,
+            kenangan,bahagia, dan sesuatu
+            yang belum selesai kusampaikan.
+        </p>
+
+        <button
+            class="open-btn"
+            onclick="openBook()">
+
+            Buka Buku 🤎
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- ================= BOOK ================= -->
+
+<div class="book-wrapper">
+
+<div class="book">
+
+
+<!-- ================= PAGE 1 ================= -->
+
+<section class="page active">
+
+    <div class="page-coffee">☕</div>
+    <div class="page-brain">🧠</div>
+
+    <div class="page-decoration dec1">♥</div>
+    <div class="page-decoration dec2">☕</div>
+
+    <div class="inner">
+
+        <div class="heart">
+            ☕ ♥ ☕
+        </div>
+
+        <h2>
+            Our Little Song
+        </h2>
+
+        <p>
+            Sebelum membaca semuanya,
+            biarkan lagu ini menemani
+            halaman pertama kamu, jie.
+        </p>
+
+        <div class="music">
+
+            <div class="cd" id="cd">
+                ☕
+            </div>
+
+            <div class="youtube-box">
+
+                <iframe
+                    id="youtubeFrame"
+                    allow="autoplay; encrypted-media"
+                    allowfullscreen>
+                </iframe>
+
+            </div>
+
+            <button
+                class="open-btn"
+                id="musicButton"
+                onclick="toggleMusic()">
+
+                ▶ Play Music
+
+            </button>
+
+        </div>
+
+        <div class="quote">
+
+            <strong>
+                Putar pelan-pelan.
+            </strong>
+
+            <br>
+
+            Nggak perlu buru-buru.
+            Biar lagu ini menjadi
+            teman kecil selama
+            kamu membaca semuanya.
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= PAGE 2 ================= -->
+
+<section class="page">
+
+    <div class="page-coffee">☕</div>
+    <div class="page-brain">🧠</div>
+    <div class="page-decoration dec1">♥</div>
+
+    <div class="inner">
+
+        <div class="heart">
+            🧠 🤎 ☕
+        </div>
+
+        <h2>
+            Catatan Kecil Untukmu
+        </h2>
+
+        <p>
+            Aku tahu ini berat.
+            Mungkin jauh lebih berat
+            daripada yang bisa aku bayangkan.
+        </p>
+
+        <p>
+            Jadi, tolong tetap kuat.
+            Tapi kalau suatu hari kamu
+            merasa nggak kuat, nggak apa-apa.
+            Kamu tetap manusia yang boleh
+            merasa lelah, ingat aku masih ada di sini.
+        </p>
+
+        <div class="health-grid">
+
+            <div class="health-card">
+                <span>🧠</span>
+                <strong>Pikiran</strong>
+                <small>
+                    Jangan terlalu keras
+                    sama dirimu sendiri, jie.
+                </small>
+            </div>
+
+            <div class="health-card">
+                <span>🥗</span>
+                <strong>Makan</strong>
+                <small>
+                    Usahakan tetap makan
+                    dan memenuhi kebutuhan
+                    nutrisi tubuhmu.
+                </small>
+            </div>
+
+            <div class="health-card">
+                <span>💧</span>
+                <strong>Minum</strong>
+                <small>
+                    Cukupi kebutuhan cairan
+                    sesuai kondisi dan arahan
+                    dokter ya!.
+                </small>
+            </div>
+
+            <div class="health-card">
+                <span>🌙</span>
+                <strong>Istirahat</strong>
+                <small>
+                    Istirahat bukan berarti
+                    menyerah.
+                </small>
+            </div>
+
+        </div>
+
+        <div class="quote">
+
+            <strong>
+                Kamu nggak harus terlihat kuat
+                setiap saat.
+            </strong>
+
+            <br>
+
+            Cukup bertahan hari ini.
+            Besok pikirin besuk saja ya.
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= PAGE 3 ================= -->
+
+<section class="page">
+
+    <div class="page-coffee">☕</div>
+    <div class="page-brain">🧠</div>
+
+    <div class="inner health-page">
+
+        <div class="heart">🧠</div>
+
+        <h2>
+            Untuk Tubuh & Pikiranmu
+        </h2>
+
+        <p>
+            kanker otak stadium 3
+            bukan perjalanan yang sederhana.
+        </p>
+
+        <p>
+            Aku ngga akan pura pura
+            tau bagaimana rasanya menjadi
+            kamu. Tapi aku ingin kamu tau
+            bahwa kesehatanmu tetap penting, jauh lebih penting daripada apapun.
+        </p>
+
+        <div class="health-list">
+
+            <div class="health-item">
+                <div class="health-icon">🧠</div>
+                <div>
+                    <h3>Dengarkan Tubuhmu</h3>
+                    <p>
+                        Kalau muncul gejala baru
+                        atau gejala makin memburuk,
+                        jangan abaikan. Sampaikan
+                        ke dokter yang merawatmu.
+                    </p>
+                </div>
+            </div>
+
+            <div class="health-item">
+                <div class="health-icon">💊</div>
+                <div>
+                    <h3>Ikuti Perawatan</h3>
+                    <p>
+                        Jalani obat, pemeriksaan,
+                        kontrol, dan terapi sesuai
+                        rencana dokter. Jangan
+                        mengubah pengobatan sendiri.
+                    </p>
+                </div>
+            </div>
+
+            <div class="health-item">
+                <div class="health-icon">🥗</div>
+                <div>
+                    <h3>Jaga Pola Makan</h3>
+                    <p>
+                        Usahakan makan dengan cukup
+                        dan bergizi sesuai kebutuhan
+                        tubuhmu. Kalau sulit makan,
+                        bicarakan sama dokter.
+                    </p>
+                </div>
+            </div>
+
+            <div class="health-item">
+                <div class="health-icon">🌙</div>
+                <div>
+                    <h3>Berikan Waktu Untuk Istirahat</h3>
+                    <p>
+                        Kamu ngga harus produktif
+                        setiap hari. Tubuh yang sedang
+                        berjuang juga membutuhkan
+                        waktu untuk beristirahat.
+                    </p>
+                </div>
+            </div>
+
+            <div class="health-item">
+                <div class="health-icon">🚶</div>
+                <div>
+                    <h3>Bergerak Sesuai Kemampuan</h3>
+                    <p>
+                        Kalau kondisi dan dokter
+                        mengizinkan, aktivitas ringan
+                        bisa menjadi bagian dari
+                        rutinitasmu.
+                    </p>
+                </div>
+            </div>
+
+            <div class="health-item">
+                <div class="health-icon">🫶</div>
+                <div>
+                    <h3>Jangan Simpan Semuanya Sendiri</h3>
+                    <p>
+                        Takut, sedih, marah, dan lelah
+                        semuanya boleh dirasakan.
+                        Meminta ditemani bukan
+                        tanda bahwa kamu lemah.
+                    </p>
+                </div>
+            </div>
+
+            <div class="health-item">
+                <div class="health-icon">☕</div>
+                <div>
+                    <h3>Dan Tentang Kopi...</h3>
+                    <p>
+                        Aku tahu kopi adalah salah
+                        satu hal kecil yang dekat
+                        denganmu. Nikmati dengan baik, tapi tetap inget batasnya,
+                        dan jangan jadikannya
+                        pengganti makan, air, atau
+                        istirahat.
+                    </p>
+                </div>
+            </div>
+
+            <div class="health-item">
+                <div class="health-icon">❤️</div>
+                <div>
+                    <h3>Dan Tentang Cinta...</h3>
+                    <p>
+                        Mungkin cinta nggak bisa
+                        menyembuhkan penyakit.
+                        Tapi perhatian, kehadiran,
+                        dan doa tetap bisa menjadi
+                        alasan kecil untuk bertahan.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="health-note">
+
+            Halaman ini adalah bentuk perhatian
+            dariku, bukan pengganti arahan dokter.
+            Untuk pengobatan, makanan, aktivitas,
+            dan perubahan pola hidup, tetap
+            ikuti arahan dari dokter yang merawatmu, ya.
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= PAGE 4 ================= -->
+
+<section class="page">
+
+    <div class="page-coffee">☕</div>
+    <div class="page-brain">🧠</div>
+
+    <div class="inner">
+
+        <div class="heart">
+            ☕ ♥ ☕
+        </div>
+
+        <h2>
+            A Little Thing
+        </h2>
+
+        <p>
+            Ada satu pesan kecil
+            yang ingin kusimpan
+            khusus untukmu.
+        </p>
+
+        <p>
+            Tentang hal-hal sederhana
+            yang mungkin terlihat kecil,
+            tapi pernah berarti besar
+            buat kita.
+        </p>
+
+        <button
+            class="open-btn"
+            onclick="goToPage(5)">
+
+            ☕ Klik Untuk Membuka Pesan
+
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- ================= PAGE 5 ================= -->
+
+<section class="page">
+
+    <div class="page-coffee">☕</div>
+    <div class="page-brain">🧠</div>
+
+    <div class="message-page">
+
+        <div
+            class="heart"
+            style="text-align:center">
+
+            ♥
+
+        </div>
+
+        <h2 style="text-align:center">
+            Little Things
+        </h2>
+
+        <div class="message-scroll">
+
+            <p>
+                Mungkin buat orang lain,
+                kita ini adalah sepasang yang buruk.
+                Tapi buatku, ada banyak cerita
+                yang tersimpan di balik hal hal
+                sederhana dan mungkin cerita yang banyak sakitnya.
+            </p>
+
+            <p>
+                Tapi buatku, ada banyak cerita
+                yang tersimpan di balik hal hal
+                sesederhana itu.
+            </p>
+
+            <p>
+                Tentang dua orang yang pernah
+                saling menemukan, saling mengenal,
+                dan pernah menjadi rumah
+                untuk satu sama lain.
+            </p>
+
+            <p>
+                Tentang percakapan kecil,
+                tawa, kopi, lagu, dan kebiasaan
+                sederhana yang dulu mungkin
+                terasa biasa saja.
+            </p>
+
+            <p>
+                Tapi setelah semuanya berubah,
+                justru hal hal kecil itu yang
+                sering kembali diam diam.
+            </p>
+
+            <p>
+                Aku masih ingat beberapa hal
+                tentangmu. Bukan karena aku
+                ingin memaksa masa lalu kembali,
+                tapi karena pernah ada bagian
+                hidupku yang sangat dekat denganmu.
+            </p>
+
+            <p>
+                Kalau suatu hari kamu membuka
+                halaman ini lagi, aku cuma ingin
+                kamu tahu bahwa pernah ada
+                seseorang yang benar benar
+                peduli kepadamu.
+            </p>
+
+            <p>
+                Ngga harus kembali.
+                Ngga harus menjawab apa apa.
+                Ngga harus menjadi seperti dulu.
+            </p>
+
+            <p>
+                Cukup tau bahwa pernah ada
+                seseorang yang berharap kamu
+                baik baik saja, tanpa memberitau caranya mencintai
+                bahkan ketika waktu itu, dan
+                keadaan kita sudah nggak sama.
+            </p>
+
+            <p>
+                Dan kalau suatu hari kamu melihat
+                segelas kopi favoritku, mendengar lagu
+                kesukaanku, dan sedang melewati hari yang
+                terasa terlalu berat...
+            </p>
+
+            <p>
+                semoga kamu ingat bahwa hidupmu
+                tetap berharga untuk diperjuangkan.
+                dan ingat aku di sini, tetap mendoakanmu, dan berharap kamu baik baik saja.
+            </p>
+
+            <div style="
+                text-align:center;
+                padding:20px 5px 35px;
+                line-height:1.8;
+            ">
+
+                ☕ 🤎 ♥ 🤎 ☕
+
+                <br><br>
+
+                <i>
+                    Some memories don't need
+                    to come back.
+                    <br>
+                    They only deserve
+                    to be remembered.
+                </i>
+
+            </div>
+
+        </div>
+
+        <div class="scroll-hint">
+            ↓ geser ke bawah ↓
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= PAGE 6 ================= -->
+
+<section class="page">
+
+    <div class="page-coffee">☕</div>
+    <div class="page-brain">🧠</div>
+
+    <div class="coffee-decoration c1">☕</div>
+    <div class="coffee-decoration c2">🤎</div>
+    <div class="coffee-decoration c3">☕</div>
+    <div class="coffee-decoration c4">🤎</div>
+
+    <div class="inner coffee-page">
+
+        <div class="heart">
+            ☕ ♥
+        </div>
+
+        <h2>
+            Coffee & Love
+        </h2>
+
+        <div class="coffee-cup">
+            ☕
+        </div>
+
+        <div class="love-frame">
+
+            <div class="love-text">
+
+                ♥
+
+                <br>
+
+                Somewhere between coffee
+                and conversations,
+                I found a little home in you.
+
+                <br>
+
+                ☕
+
+            </div>
+
+        </div>
+
+        <p>
+            Ada beberapa hal yang rasanya
+            lebih mudah diceritakan lewat
+            segelas kopi daripada lewat
+            kalimat.
+        </p>
+
+        <p>
+            Dan mungkin kamu adalah salah
+            satu cerita yang sampai sekarang
+            masih aku simpan, dan masih
+            aku cintai.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- ================= PAGE 7 ================= -->
+
+<section class="page">
+
+    <div class="page-coffee">☕</div>
+    <div class="page-brain">🧠</div>
+
+    <div class="inner">
+
+        <div class="heart">♥</div>
+
+        <h2>
+            Jombang × Blitar
+        </h2>
+
+        <p>
+            Kamu dari Jombang.
+        </p>
+
+        <p>
+            Aku dari Blitar.
+        </p>
+
+        <div class="city">
+
+            <span>📍 Jombang</span>
+
+            <div class="city-heart">
+                ♥
+            </div>
+
+            <span>Blitar 📍</span>
+
+        </div>
+
+        <p>
+            Dua tempat yang berbeda,
+            dua kehidupan yang berbeda,
+            tapi pernah dipertemukan
+            oleh satu cerita.
+        </p>
+
+        <div class="quote">
+
+            Lucu ya...
+
+            <br>
+
+            Hai jombang, aku mencintai seorang
+            yang ada di kotamu. Dan dia juga mencintaiku,
+            meskipun aku ngga pernah tau 
+            rasa itu akan bertahan sampai kapan.
+
+            <br><br>
+
+            Dan mungkin,
+            pertemuan itu ngga selalu
+            harus berakhir dengan
+            tetap bersama.
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= PAGE 8 ================= -->
+
+<section class="page">
+
+    <div class="page-coffee">☕</div>
+    <div class="page-brain">🧠</div>
+
+    <div class="inner">
+
+        <div class="heart">
+            ♥
+        </div>
+
+        <h2>
+            Maybe Us...
+        </h2>
+
+        <p>
+            Mungkin hubungan kita
+            memang sudah selesai.
+        </p>
+
+        <p>
+            Tapi aku rasa,
+            rasa cinta yang pernah tumbuh
+            ngga selalu ikut selesai
+            hanya karena sebuah hubungan
+            berakhir.
+        </p>
+
+        <p>
+            Bukan berarti aku ingin memaksamu
+            kembali.
+        </p>
+
+        <p>
+            Bukan juga berarti aku ingin
+            mengulang semua yang sudah terjadi.
+        </p>
+
+        <div class="quote">
+
+            Aku cuma ngga ingin semua
+            yang pernah kita punya berubah
+            menjadi sesuatu yang seolah-olah
+            ngga pernah berarti.
+
+            <br><br>
+
+            Karena buatku,
+            kamu pernah berarti.
+            Dan mungkin sebagian kecil
+            dari rasa itu akan selalu ada.
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= PAGE 9 ================= -->
+
+<section class="page">
+
+    <div class="page-coffee">☕</div>
+    <div class="page-brain">🧠</div>
+
+    <div class="inner">
+
+        <div class="heart">
+            🌙 ♥
+        </div>
+
+        <h2>
+            Kalau Nanti...
+        </h2>
+
+        <p>
+            Kalau nanti kita benar benar
+            menjadi dua orang asing lagi,
+            aku harap kamu tetap baik baik aja, ya jie..
+        </p>
+
+        <p>
+            Kalau suatu hari kamu mendengar
+            lagu lama, melihat kopi,
+            atau mengingat sesuatu tentang kita,
+            ngga perlu merasa sedih.
+            jika kita masih ada koneksi,
+            ceritakan padaku tentang hal itu, aku akan senang mendengarnya.
+        </p>
+
+        <p>
+            Anggap saja itu sebagai bukti
+            bahwa kita pernah hidup
+            di satu bagian kecil
+            dari cerita masing masing.
+        </p>
+
+        <div class="quote">
+
+            Aku ngga meminta kamu kembali.
+
+            <br><br>
+
+            Aku cuma berharap
+            kamu tetap menjaga dirimu,
+            tetap berjuang untuk kesehatanmu,
+            dan tetap menemukan alasan
+            untuk tersenyum.
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= PAGE 10 ================= -->
+
+<section class="page">
+
+    <div class="page-coffee">☕</div>
+    <div class="page-brain">🧠</div>
+
+    <div class="final-page">
+
+        <div class="inner">
+
+            <div class="final-heart">
+                🤎
+            </div>
+
+            <h2>
+                Closing — Untuk Adjie
+            </h2>
+
+            <div class="final-message">
+
+                <p>
+                    Aku ngga akan ninggalin kamu
+                    di fase sesulit ini.
+                </p>
+
+                <p>
+                    Meskipun aku tau mungkin
+                    aku berada di luar ekspektasimu,
+                    aku tetap memilih untuk ngga
+                    meninggalkanmu dan ngga
+                    sepenuhnya membencimu.
+                </p>
+
+                <p>
+                    Karena sejujurnya...
+                    aku bahkan masih mencintaimu.
+                </p>
+
+                <p>
+                    Ngga apa apa kalau namaku
+                    sudah terlanjur jelek di matamu, dan
+                    orang sekitarmu.
+                </p>
+
+                <p>
+                    Aku rela membiarkan diriku
+                    terlihat semakin buruk di
+                    pandanganmu dan mereka, kalau itu menjadi
+                    caraku mencintaimu, dan untuk tetap berada
+                    di sampingmu di masa sesulit ini.
+                </p>
+
+            </div>
+
+            <p>
+                Aku tahu mungkin semua ini
+                ngga akan mengubah apa apa.
+            </p>
+
+            <p>
+                Mungkin hubungan kita tetap
+                akan menjadi sesuatu yang
+                pernah ada.
+            </p>
+
+            <p>
+                Tapi setidaknya, sebelum cerita
+                jadi kenangan dimasa tua,
+                aku ingin kamu tau satu hal.
+            </p>
+
+            <p>
+                Aku ngga datang ke sini untuk
+                meminta apa pun darimu.
+            </p>
+
+            <p>
+                Aku cuma ingin meninggalkan
+                sedikit kehangatan, di saat
+                hidup mungkin sedang terasa
+                terlalu dingin.
+            </p>
+
+            <div class="closing">
+
+                <p>
+                    Kalau suatu hari kamu merasa
+                    semuanya terlalu berat,
+                    ingatlah bahwa kamu pernah
+                    menjadi seseorang yang begitu
+                    berarti bagi seseorang.
+                </p>
+
+                <p>
+                    Dan meskipun aku ngga tau
+                    akan menjadi apa kita nanti,
+                    aku akan tetap berharap
+                    kamu mendapatkan hari hari
+                    yang lebih baik.
+                </p>
+
+                <p>
+                    Jaga tubuhmu.
+                    Jaga pikiranmu.
+                    Jangan menyerah pada dirimu sendiri.
+                </p>
+
+                <p>
+                    Istirahat kalau lelah.
+                    Menangis kalau ingin.
+                    Minta bantuan kalau butuh.
+                    Dan tetap hidup dengan
+                    caramu sendiri.
+                </p>
+
+                <p>
+                    Karena pada akhirnya,
+                    cinta bukan selalu tentang
+                    memiliki seseorang.
+                </p>
+
+                <p>
+                    Kadang cinta adalah tentang
+                    tetap mendoakan seseorang,
+                    bahkan ketika kita ngga lagi
+                    tau apakah kita masih punya
+                    tempat di hidupnya.
+                </p>
+
+                <p>
+                    Terima kasih sudah pernah
+                    menjadi bagian dari hidupku.
+                </p>
+
+                <p>
+                    Terima kasih untuk semua
+                    kopi, tawa, percakapan,
+                    luka, bahagia, dan kenangan
+                    yang pernah kita buat.
+                </p>
+
+                <p>
+                    Kalau semuanya nanti hanya
+                    tinggal kenangan, biarlah.
+                    Setidaknya aku pernah
+                    benar benar mencintaimu.
+                </p>
+
+                <div class="i-love-you">
+
+                    I love you, Adjie. 🤎
+
+                </div>
+
+                <br>
+
+                <p>
+                    Dan untuk kali ini,
+                    aku ngga akan meminta
+                    apa apa lagi. Selain
+                    kamu tetap menghubungiku, di setiap harinya.
+                </p>
+
+                <p>
+                    Cukup jaga dirimu.
+                </p>
+
+                <p>
+                    Sampai kapan pun,
+                    semoga hidup selalu
+                    menemukan cara untuk
+                    memelukmu kembali.
+                </p>
+
+                <br>
+
+                <p>
+                    ☕ ♥ 🧠
+                </p>
+
+                <p>
+                    <i>
+                        — dari seseorang yang
+                        pernah menemukan rumah
+                        di dalam dirimu.
+                    </i>
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+</div>
+
+
+<!-- ================= NAVIGATION ================= -->
+
+<div class="navigation">
+
+    <button
+        id="backBtn"
+        onclick="previousPage()">
+
+        ← Back
+
+    </button>
+
+    <div
+        class="page-number"
+        id="pageNumber">
+
+        01 / 10
+
+    </div>
+
+    <button
+        id="nextBtn"
+        onclick="nextPage()">
+
+        Next →
+
+    </button>
+
+</div>
+
+</div>
+
+
+<script>
+
+/* ================= OPEN BOOK ================= */
+
+function openBook(){
+
+    document
+    .getElementById("cover")
+    .classList.add("open");
+
+}
+
+
+/* ================= YOUTUBE ================= */
+
+/*
+   GANTI LINK DI BAWAH DENGAN LINK YOUTUBE KAMU.
+
+   CONTOH:
+   https://www.youtube.com/watch?v=dQw4w9WgXcQ
+*/
+
+const youtubeLink =
+"https://youtu.be/18yxaiMc3Zc?si=NxxLUEeyhj8fFgJO";
+
+
+function getYoutubeID(url){
+
+    try{
+
+        const link =
+        new URL(url);
+
+        if(
+            link.hostname.includes("youtu.be")
+        ){
+
+            return link.pathname.substring(1);
+
+        }
+
+        return link.searchParams.get("v");
+
+    }
+
+    catch(error){
+
+        return null;
+
+    }
+
+}
+
+
+const videoID =
+getYoutubeID(youtubeLink);
+
+
+const youtubeFrame =
+document.getElementById(
+    "youtubeFrame"
+);
+
+
+if(videoID){
+
+    youtubeFrame.src =
+        "https://www.youtube.com/embed/"
+        +
+        videoID
+        +
+        "?enablejsapi=1&rel=0";
+
+}
+
+
+/* ================= MUSIC ================= */
+
+let musicPlaying=false;
+
+
+function toggleMusic(){
+
+    if(!videoID){
+
+        alert(
+            "Masukkan link YouTube lagu terlebih dahulu."
+        );
+
+        return;
+
+    }
+
+    const cd =
+    document.getElementById("cd");
+
+    const button =
+    document.getElementById(
+        "musicButton"
+    );
+
+
+    if(!musicPlaying){
+
+        youtubeFrame
+        .contentWindow
+        .postMessage(
+
+            JSON.stringify({
+
+                event:"command",
+                func:"playVideo",
+                args:[]
+
+            }),
+
+            "*"
+
+        );
+
+
+        cd.classList.add("playing");
+
+        button.innerHTML =
+            "Ⅱ Pause Music";
+
+        musicPlaying=true;
+
+    }
+
+    else{
+
+        youtubeFrame
+        .contentWindow
+        .postMessage(
+
+            JSON.stringify({
+
+                event:"command",
+                func:"pauseVideo",
+                args:[]
+
+            }),
+
+            "*"
+
+        );
+
+
+        cd.classList.remove("playing");
+
+        button.innerHTML =
+            "▶ Play Music";
+
+        musicPlaying=false;
+
+    }
+
+}
+
+
+/* ================= PAGE SYSTEM ================= */
+
+let currentPage=1;
+
+const totalPages=10;
+
+const pages =
+document.querySelectorAll(".page");
+
+
+function showPage(){
+
+    pages.forEach(
+        function(page,index){
+
+            page.classList.remove("active");
+
+            if(
+                index ===
+                currentPage - 1
+            ){
+
+                page.classList.add("active");
+
+            }
+
+        }
+    );
+
+
+    document
+    .getElementById("pageNumber")
+    .innerText =
+        String(currentPage).padStart(2,"0")
+        +
+        " / "
+        +
+        totalPages;
+
+
+    document
+    .getElementById("backBtn")
+    .disabled =
+        currentPage === 1;
+
+
+    document
+    .getElementById("nextBtn")
+    .disabled =
+        currentPage === totalPages;
+
+
+    document
+    .querySelectorAll(
+        ".message-scroll,"
+        + ".final-page,"
+        + ".health-page"
+    )
+    .forEach(
+        function(element){
+
+            element.scrollTop=0;
+
+        }
+    );
+
+}
+
+
+/* ================= DIRECT PAGE ================= */
+
+function goToPage(number){
+
+    if(
+        number >= 1 &&
+        number <= totalPages
+    ){
+
+        currentPage=number;
+        showPage();
+
+    }
+
+}
+
+
+/* ================= NEXT ================= */
+
+function nextPage(){
+
+    if(
+        currentPage < totalPages
+    ){
+
+        currentPage++;
+        showPage();
+
+    }
+
+}
+
+
+/* ================= BACK ================= */
+
+function previousPage(){
+
+    if(
+        currentPage > 1
+    ){
+
+        currentPage--;
+        showPage();
+
+    }
+
+}
+
+
+/* ================= START ================= */
+
+showPage();
+
+</script>
+
+</body>
+</html>
+```
